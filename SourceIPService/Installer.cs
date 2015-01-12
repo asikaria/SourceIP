@@ -11,6 +11,15 @@ namespace SourceIPService
 {
     // the RunInstaller attribute tells installutil to call this class, enumerate it's installers 
     // collection, and call the Install methods of all the objects in the collection
+
+    // To install, use installutil on the visual studio command line (run elevated). 
+    // installutil \path\to\exe\for\this\app
+    // To uninstall, use installutil /u
+    // Use scm to actually start and stop the service
+
+
+
+
     [RunInstaller(true)]
     public class SourceIPInstaller : Installer
     {

@@ -22,14 +22,5 @@ namespace SourceIPService
             ServiceBase.Run(svc);
         }
 
-        //switch call in main to this, in order to run the server as a console app. Useful for debugging.
-        static void RunInConsole()
-        {
-            Service s = new Service();
-            s.DoStart();
-
-        }
-
-
     }
 }
