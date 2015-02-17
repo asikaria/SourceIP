@@ -61,7 +61,7 @@ namespace SourceIPService
             listener = new HttpListener();
             listener.Prefixes.Add(getHttpListenerPrefix());
             listener.Start();
-            int numConcurrentRequests = 4;
+            int numConcurrentRequests = Environment.ProcessorCount;
             for (int i = 0; i < numConcurrentRequests; i++)
             {
                 try
