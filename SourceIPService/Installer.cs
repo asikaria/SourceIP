@@ -13,6 +13,7 @@ namespace SourceIPService
     // collection, and call the Install methods of all the objects in the collection
 
     // To install, use installutil on the visual studio command line (run elevated). 
+    // ( \Windows\Microsoft.NET\Framework\v4.0.30319\installutil.exe)
     // installutil \path\to\exe\for\this\app
     // To uninstall, use installutil /u
     // Use scm to actually start and stop the service

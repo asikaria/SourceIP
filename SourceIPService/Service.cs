@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using System.ServiceProcess;
 using System.Net;
 using System.Threading;
+using System.Configuration;
+
 
 
 namespace SourceIPService
@@ -57,7 +59,7 @@ namespace SourceIPService
         public void ServiceMain()
         {
             listener = new HttpListener();
-            listener.Prefixes.Add("http://*:8080/myip/");
+            listener.Prefixes.Add(getHttpListenerPrefix());
             listener.Start();
             int numConcurrentRequests = 4;
             for (int i = 0; i < numConcurrentRequests; i++)
@@ -74,6 +76,18 @@ namespace SourceIPService
 
         }
 
+        public string getHttpListenerPrefix()
+        {
+            if (ConfigurationManager.AppSettings["prefix"] == null)
+            {
+                return @"http://*:8080/myip/";
+            }
+            else
+            {
+                return ConfigurationManager.AppSettings["prefix"];
+            }
+        }
+
         //The method that runs in request processing worker threads
         public void ProcessRequest(IAsyncResult iar)
         {
@@ -85,8 +99,14 @@ namespace SourceIPService
             }
             catch (System.Net.HttpListenerException)
             {
-                if (stopsignal == 0) { throw; }  // If stopsignal is signalled, then this is expected behavior - just continue shutting down
-                //Console.WriteLine(ex.GetType().FullName);   --> Log this
+                if (stopsignal > 0)
+                {
+                    // If stopsignal is signalled, then this is expected behavior - just continue shutting down
+                }
+                else
+                {
+                    //Console.WriteLine(ex.GetType().FullName);   --> Log this
+                }
             }
             if (context != null)
             {
